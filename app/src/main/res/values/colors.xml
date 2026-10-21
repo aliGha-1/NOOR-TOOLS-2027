@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="noor_blue">#051941</color>
+    <color name="noor_blue_light">#123A78</color>
+    <color name="noor_gold">#D4AF37</color>
+    <color name="noor_white">#FFFFFF</color>
+    <color name="noor_black">#000000</color>
+</resources>
