@@ -3,10 +3,10 @@ package com.noortools2027;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.content.res.ColorStateList;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         preferences = getSharedPreferences(
-            "noor_security", MODE_PRIVATE
+                "noor_security", MODE_PRIVATE
         );
 
         getWindow().setStatusBarColor(blue);
@@ -47,15 +47,14 @@ public class MainActivity extends Activity {
 
     private int dp(float value) {
         return (int) TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            value,
-            getResources().getDisplayMetrics()
+                TypedValue.COMPLEX_UNIT_DIP,
+                value,
+                getResources().getDisplayMetrics()
         );
     }
 
     private GradientDrawable roundedBackground(
-        int color, int radius
-    ) {
+            int color, int radius) {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(color);
         drawable.setCornerRadius(dp(radius));
@@ -77,9 +76,7 @@ public class MainActivity extends Activity {
         setContentView(scroll);
     }
 
-    private TextView text(
-        String value, int size, int color
-    ) {
+    private TextView text(String value, int size, int color) {
         TextView view = new TextView(this);
         view.setText(value);
         view.setTextSize(size);
@@ -93,9 +90,9 @@ public class MainActivity extends Activity {
         ImageView logo = new ImageView(this);
 
         int imageId = getResources().getIdentifier(
-            "noor_tools_icon",
-            "drawable",
-            getPackageName()
+                "noor_tools_icon",
+                "drawable",
+                getPackageName()
         );
 
         if (imageId != 0) {
@@ -103,9 +100,7 @@ public class MainActivity extends Activity {
             logo.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
             LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(
-                    dp(size), dp(size)
-                );
+                    new LinearLayout.LayoutParams(dp(size), dp(size));
 
             params.gravity = Gravity.CENTER;
             params.bottomMargin = dp(12);
@@ -118,40 +113,24 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void showWelcome() {
-        setupScreen();
+    private Button button(String label) {
+        Button b = new Button(this);
+        b.setText(label);
+        b.setTextColor(blue);
+        b.setTextSize(16);
+        b.setTypeface(Typeface.DEFAULT_BOLD);
+        b.setBackgroundTintList(ColorStateList.valueOf(gold));
 
-        View spacer = new View(this);
-        root.addView(
-            spacer,
-            new LinearLayout.LayoutParams(
-                1, dp(20)
-            )
-        );
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
 
-        addLogo(190);
+        params.setMargins(0, dp(10), 0, dp(6));
+        b.setLayoutParams(params);
 
-        TextView title = text(
-            "NOOR TOOLS 2027", 28, white
-        );
-        title.setTypeface(Typeface.DEFAULT_BOLD);
-        root.addView(title);
-
-        root.addView(
-            text("أدواتك.. في مكان واحد", 17, gold)
-        );
-
-        root.addView(
-            text("تصميم وتطوير: علي غريب", 15, white)
-        );
-
-        root.postDelayed(() -> {
-            if (preferences.contains("password_hash")) {
-                showLogin();
-            } else {
-                showCreatePassword();
-            }
-        }, 1800);
+        return b;
     }
 
     private EditText passwordField(String hint) {
@@ -162,23 +141,18 @@ public class MainActivity extends Activity {
         field.setTextColor(white);
 
         field.setInputType(
-            InputType.TYPE_CLASS_TEXT |
-            InputType.TYPE_TEXT_VARIATION_PASSWORD
+                InputType.TYPE_CLASS_TEXT |
+                InputType.TYPE_TEXT_VARIATION_PASSWORD
         );
 
-        field.setPadding(
-            dp(16), dp(10), dp(16), dp(10)
-        );
-
-        field.setBackground(
-            roundedBackground(lightBlue, 12)
-        );
+        field.setPadding(dp(16), dp(10), dp(16), dp(10));
+        field.setBackground(roundedBackground(lightBlue, 12));
 
         LinearLayout.LayoutParams params =
-            new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            );
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
 
         params.setMargins(0, dp(6), 0, dp(6));
         field.setLayoutParams(params);
@@ -186,47 +160,37 @@ public class MainActivity extends Activity {
         return field;
     }
 
-    private Button button(String label) {
-        Button b = new Button(this);
-        b.setText(label);
-        b.setTextColor(blue);
-        b.setTextSize(16);
-        b.setTypeface(Typeface.DEFAULT_BOLD);
+    private void showWelcome() {
+        setupScreen();
+        addLogo(170);
 
-        b.setBackgroundTintList(
-            ColorStateList.valueOf(gold)
-        );
+        TextView title = text("NOOR TOOLS 2027", 28, white);
+        title.setTypeface(Typeface.DEFAULT_BOLD);
+        root.addView(title);
 
-        LinearLayout.LayoutParams params =
-            new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            );
+        root.addView(text("أدواتك.. في مكان واحد", 17, gold));
 
-        params.setMargins(0, dp(10), 0, dp(6));
-        b.setLayoutParams(params);
-
-        return b;
+        root.postDelayed(() -> {
+            if (preferences.contains("password_hash")) {
+                showLogin();
+            } else {
+                showCreatePassword();
+            }
+        }, 1200);
     }
 
     private void showCreatePassword() {
         setupScreen();
         addLogo(110);
 
-        root.addView(
-            text("إنشاء كلمة المرور", 27, gold)
-        );
-
+        root.addView(text("إنشاء كلمة المرور", 26, gold));
         root.addView(text(
-            "أنشئ كلمة مرور خاصة بك واحتفظ بها في مكان آمن.",
-            16, white
+                "أنشئ كلمة مرور للدخول إلى التطبيق",
+                16, white
         ));
 
-        EditText first =
-            passwordField("كلمة المرور الجديدة");
-
-        EditText second =
-            passwordField("تأكيد كلمة المرور");
+        EditText first = passwordField("كلمة المرور الجديدة");
+        EditText second = passwordField("تأكيد كلمة المرور");
 
         root.addView(first);
         root.addView(second);
@@ -256,8 +220,8 @@ public class MainActivity extends Activity {
             }
 
             preferences.edit()
-                .putString("password_hash", hash)
-                .apply();
+                    .putString("password_hash", hash)
+                    .apply();
 
             showHome();
         });
@@ -267,13 +231,8 @@ public class MainActivity extends Activity {
         setupScreen();
         addLogo(125);
 
-        root.addView(
-            text("NOOR TOOLS 2027", 28, gold)
-        );
-
-        root.addView(
-            text("أدخل كلمة المرور للمتابعة", 17, white)
-        );
+        root.addView(text("NOOR TOOLS 2027", 28, gold));
+        root.addView(text("أدخل كلمة المرور للمتابعة", 17, white));
 
         EditText password = passwordField("كلمة المرور");
         root.addView(password);
@@ -283,11 +242,11 @@ public class MainActivity extends Activity {
 
         login.setOnClickListener(v -> {
             String entered = hashPassword(
-                password.getText().toString()
+                    password.getText().toString()
             );
 
             String saved = preferences.getString(
-                "password_hash", ""
+                    "password_hash", ""
             );
 
             if (entered != null && entered.equals(saved)) {
@@ -302,103 +261,44 @@ public class MainActivity extends Activity {
         setupScreen();
         addLogo(145);
 
-        root.addView(
-            text("NOOR TOOLS 2027", 29, gold)
-        );
+        TextView title = text("NOOR TOOLS 2027", 29, gold);
+        title.setTypeface(Typeface.DEFAULT_BOLD);
+        root.addView(title);
 
-        root.addView(
-            text("مرحبًا بك في تطبيق نور تولز", 19, white)
-        );
+        root.addView(text(
+                "مرحبًا بك في تطبيق نور تولز",
+                20, white
+        ));
 
-        root.addView(
-            text("تصميم وتطوير: علي غريب", 18, gold)
-        );
+        root.addView(text(
+                "تصميم وتطوير: علي غريب",
+                17, gold
+        ));
 
-        root.addView(
-            text("للتواصل: 01559330658", 18, white)
-        );
+        root.addView(text(
+                "للتواصل: 01559330658",
+                17, white
+        ));
 
-        Button change = button("تغيير كلمة المرور");
-        root.addView(change);
-
-        change.setOnClickListener(
-            v -> showChangePassword()
-        );
-    }
-
-    private void showChangePassword() {
-        setupScreen();
-        addLogo(90);
-
-        root.addView(
-            text("تغيير كلمة المرور", 25, gold)
-        );
-
-        EditText oldPassword =
-            passwordField("كلمة المرور الحالية");
-
-        EditText newPassword =
-            passwordField("كلمة المرور الجديدة");
-
-        root.addView(oldPassword);
-        root.addView(newPassword);
-
-        Button save = button("حفظ التغيير");
-        root.addView(save);
-
-        save.setOnClickListener(v -> {
-            String oldHash = hashPassword(
-                oldPassword.getText().toString()
-            );
-
-            String savedHash = preferences.getString(
-                "password_hash", ""
-            );
-
-            String newValue =
-                newPassword.getText().toString();
-
-            if (oldHash == null ||
-                !oldHash.equals(savedHash)) {
-                toast("كلمة المرور الحالية غير صحيحة");
-                return;
-            }
-
-            if (newValue.length() < 6) {
-                toast(
-                    "كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل"
-                );
-                return;
-            }
-
-            String newHash = hashPassword(newValue);
-
-            if (newHash != null) {
-                preferences.edit()
-                    .putString("password_hash", newHash)
-                    .apply();
-
-                toast("تم تغيير كلمة المرور");
-                showHome();
-            }
-        });
+        root.addView(text(
+                "تم تسجيل الدخول بنجاح",
+                15, white
+        ));
     }
 
     private String hashPassword(String password) {
         try {
             MessageDigest digest =
-                MessageDigest.getInstance("SHA-256");
+                    MessageDigest.getInstance("SHA-256");
 
             byte[] bytes = digest.digest(
-                password.getBytes("UTF-8")
+                    password.getBytes("UTF-8")
             );
 
             StringBuilder result = new StringBuilder();
 
             for (byte b : bytes) {
-                result.append(
-                    String.format("%02x", b & 0xff)
-                );
+                result.append(String.format("%02x", b & 0xff));
             }
 
             return result.toString();
@@ -410,7 +310,7 @@ public class MainActivity extends Activity {
 
     private void toast(String message) {
         Toast.makeText(
-            this, message, Toast.LENGTH_SHORT
+                this, message, Toast.LENGTH_SHORT
         ).show();
     }
 }
