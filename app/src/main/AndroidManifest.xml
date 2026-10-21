@@ -3,6 +3,8 @@
 
     <application
         android:allowBackup="false"
+        android:icon="@drawable/noor_tools_icon"
+        android:roundIcon="@drawable/noor_tools_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
